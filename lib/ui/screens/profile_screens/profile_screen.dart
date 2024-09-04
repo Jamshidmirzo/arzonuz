@@ -58,6 +58,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     ),
                   );
                 }
+
+
+
+
+
+
+
+
+                
                 if (state is UserLoading) {
                   const Center(
                     child: CircularProgressIndicator(),
