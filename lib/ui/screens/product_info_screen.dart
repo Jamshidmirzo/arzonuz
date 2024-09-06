@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:arzonuz/data/models/product_model/product.dart';
 import 'package:arzonuz/ui/widgets/back_button.dart';
 import 'package:flutter/material.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class ProductInfoScreen extends StatefulWidget {
-  const ProductInfoScreen({super.key});
+  final Product product;
+  const ProductInfoScreen({super.key, required this.product});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -87,8 +89,10 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
                       color: Colors.amber,
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/bro.png'),
+                      image: DecorationImage(
+                        image: widget.product.photos.isEmpty
+                            ? const AssetImage('assets/image/bro.png')
+                            : NetworkImage(widget.product.photos[index]),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -99,20 +103,29 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
             const SizedBox(
               height: 20,
             ),
-            const Expanded(
+            Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Men`s Harrington Jacket',
+                    widget.product.name,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
                   Text(
-                    '\$148',
-                    style: TextStyle(
+                    '${widget.product.price} sum',
+                    style: const TextStyle(
                       color: Colors.deepPurple,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '${widget.product.price_without_stock} sum',
+                    style: const TextStyle(
+                      color: Colors.deepPurple,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      
                     ),
                   )
                 ],

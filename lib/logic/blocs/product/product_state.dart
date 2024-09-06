@@ -11,4 +11,15 @@ class ProductErrorState extends ProductState {
 
 class ProductLoadingState extends ProductState {}
 
+class ProductGetProductsState extends ProductState {
+  List<Product> products;
+  ProductGetProductsState({required this.products});
+}
+
+class ProductGetAllProductsState extends ProductState {
+  List<Product> products;
+
+  ProductGetAllProductsState({required this.products});
+}
+
 class ProductAddedState extends ProductState {}

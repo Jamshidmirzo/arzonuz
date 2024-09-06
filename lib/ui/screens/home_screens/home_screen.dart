@@ -1,14 +1,32 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
 import 'package:arzonuz/ui/screens/filters_screens/filter_screen.dart';
 import 'package:arzonuz/ui/screens/home_screens/products_list_view.dart';
 import 'package:arzonuz/ui/widgets/category_list_view.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // context.read<AuthBloc>().add(
+    //       AuthLogoutEvent(),
+    //     );
+    context.read<ProductBloc>().add(
+          ProductGetAllProductsEvent(),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +127,66 @@ class HomeScreen extends StatelessWidget {
               height: 10,
             ),
             const CategoryListView(),
-            ProductsListView(
-              firstText: context.tr('ts'),
-            ),
-            ProductsListView(
-              firstText: context.tr('nIn'),
+            BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                print(state);
+                if (state is ProductErrorState) {
+                  return Center(
+                    child: Text(state.message),
+                  );
+                }
+                if (state is ProductLoadingState) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (state is ProductGetAllProductsState) {
+                  print('qwertytrewqwertrew');
+                  print(state.products);
+                  final products = state.products;
+                  // return SizedBox(
+                  //   height: 350,
+                  //   child: ListView.separated(
+                  //     padding: const EdgeInsets.only(left: 20),
+                  //     itemCount: products.length,
+                  //     separatorBuilder: (context, index) {
+                  //       return const SizedBox(
+                  //         width: 10,
+                  //       );
+                  //     },
+                  //     scrollDirection: Axis.horizontal,
+                  //     itemBuilder: (context, index) {
+                  //       final product = products[index];
+                  //       return ProductCard(
+                  //         product: product,
+                  //       );
+                  //     },
+                  //   ),
+                  // );
+
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 460,
+                        child: ProductsListView(
+                          firstText: context.tr('ts'),
+                          products: state.products,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 460,
+                        child: ProductsListView(
+                          products: state.products,
+                          firstText: context.tr('nIn'),
+                        ),
+                      ),
+                    ],
+                  );
+                }
+                return const Center(
+                  child: Text("No Products"),
+                );
+              },
             ),
           ],
         ),

@@ -1,5 +1,5 @@
-import 'package:arzonuz/data/models/card.dart';
-import 'package:arzonuz/data/models/card_request.dart';
+import 'package:arzonuz/data/models/card_models/card.dart';
+import 'package:arzonuz/data/models/card_models/card_request.dart';
 import 'package:arzonuz/logic/services/card_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,6 +24,7 @@ class CardRepository {
       String? refreshToken = shared.getString('refreshToken');
       if (refreshToken != null) {
         final responce = await cardService.getCards(refreshToken);
+        print(responce);
         List<CardModel> cards = [];
         for (var element in responce!['cards']) {
           cards.add(

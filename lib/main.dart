@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/logic/blocs/card/card_bloc.dart';
+import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
 import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
 import 'package:arzonuz/logic/cubits/button_cubit.dart';
 import 'package:arzonuz/logic/cubits/filter_cubit.dart';
@@ -45,8 +46,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => UserBloc(),
         ),
-          BlocProvider(
+        BlocProvider(
           create: (context) => CardBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProductBloc(),
         ),
       ],
       child: AdaptiveTheme(

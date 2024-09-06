@@ -1,5 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:arzonuz/data/models/card_request.dart';
+import 'package:arzonuz/data/models/card_models/card_request.dart';
 import 'package:arzonuz/logic/blocs/card/card_bloc.dart';
 import 'package:arzonuz/ui/widgets/back_button.dart';
 import 'package:arzonuz/ui/widgets/button_with_elevation.dart';
@@ -21,7 +21,7 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
   final expController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  void submit(BuildContext context) {
+  void submit(BuildContext context) async {
     if (_formKey.currentState!.validate()) {
       context.read<CardBloc>().add(
             CardAddEvent(
@@ -31,7 +31,6 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                   expiration_date: expController.text),
             ),
           );
-      context.read<CardBloc>().add(CardGetEvent());
     }
   }
 
@@ -49,7 +48,6 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
                 mode: CupertinoDatePickerMode.date,
                 initialDateTime: DateTime.now(),
                 onDateTimeChanged: (DateTime newDateTime) {
-                  // Update the expiration date
                   setState(() {
                     expController.text =
                         "${newDateTime.month.toString().padLeft(2, '0')}/${newDateTime.year.toString().substring(2)}";
@@ -93,7 +91,10 @@ class _AddPaymentScreenState extends State<AddPaymentScreen> {
             );
           }
           if (state is CardAdded) {
-            Navigator.pop(context);
+            context.read<CardBloc>().add(CardGetEvent());
+            Future.delayed(Duration(milliseconds: 200), () {
+              Navigator.pop(context);
+            });
           }
         },
         builder: (context, state) {

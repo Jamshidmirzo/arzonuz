@@ -1,4 +1,4 @@
-import 'package:arzonuz/data/models/forgot_pass_reeuqest.dart';
+import 'package:arzonuz/data/models/passwords/forgot_pass_reeuqest.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/ui/screens/auth_screens/succesufuly_forgot_password_screen.dart';
 import 'package:arzonuz/ui/widgets/button_with_elevation.dart';

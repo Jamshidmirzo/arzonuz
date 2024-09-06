@@ -7,7 +7,8 @@ class ProductResponce {
   List color;
   String description;
   String end_date;
-  String limit_of_product;
+  int limit_of_product;
+  int price_without_stock;
   String name;
   List size;
   String start_date;
@@ -17,6 +18,7 @@ class ProductResponce {
     required this.description,
     required this.end_date,
     required this.limit_of_product,
+    required this.price_without_stock,
     required this.name,
     required this.size,
     required this.start_date,
@@ -27,7 +29,8 @@ class ProductResponce {
     List? color,
     String? description,
     String? end_date,
-    String? limit_of_product,
+    int? limit_of_product,
+    int? price_without_stock,
     String? name,
     List? size,
     String? start_date,
@@ -38,6 +41,7 @@ class ProductResponce {
       description: description ?? this.description,
       end_date: end_date ?? this.end_date,
       limit_of_product: limit_of_product ?? this.limit_of_product,
+      price_without_stock: price_without_stock ?? this.price_without_stock,
       name: name ?? this.name,
       size: size ?? this.size,
       start_date: start_date ?? this.start_date,
@@ -51,6 +55,7 @@ class ProductResponce {
       'description': description,
       'end_date': end_date,
       'limit_of_product': limit_of_product,
+      'price_without_stock': price_without_stock,
       'name': name,
       'size': size,
       'start_date': start_date,
@@ -65,7 +70,8 @@ class ProductResponce {
       ),
       description: map['description'] as String,
       end_date: map['end_date'] as String,
-      limit_of_product: map['limit_of_product'] as String,
+      limit_of_product: map['limit_of_product'] as int,
+      price_without_stock: map['price_without_stock'] as int,
       name: map['name'] as String,
       size: List.from(
         (map['size'] as List),
@@ -82,7 +88,7 @@ class ProductResponce {
 
   @override
   String toString() {
-    return 'ProductResponce(color: $color, description: $description, end_date: $end_date, limit_of_product: $limit_of_product, name: $name, size: $size, start_date: $start_date, stock: $stock)';
+    return 'ProductResponce(color: $color, description: $description, end_date: $end_date, limit_of_product: $limit_of_product, price_without_stock: $price_without_stock, name: $name, size: $size, start_date: $start_date, stock: $stock)';
   }
 
   @override
@@ -93,6 +99,7 @@ class ProductResponce {
         other.description == description &&
         other.end_date == end_date &&
         other.limit_of_product == limit_of_product &&
+        other.price_without_stock == price_without_stock &&
         other.name == name &&
         listEquals(other.size, size) &&
         other.start_date == start_date &&
@@ -105,6 +112,7 @@ class ProductResponce {
         description.hashCode ^
         end_date.hashCode ^
         limit_of_product.hashCode ^
+        price_without_stock.hashCode ^
         name.hashCode ^
         size.hashCode ^
         start_date.hashCode ^

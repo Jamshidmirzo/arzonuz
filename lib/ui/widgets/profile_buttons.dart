@@ -11,6 +11,7 @@ class ProfileButtons extends StatelessWidget {
     return Column(
       children: [
         InkWell(
+          borderRadius: BorderRadius.circular(20),
           onTap: onTap,
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 19),

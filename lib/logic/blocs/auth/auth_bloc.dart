@@ -1,6 +1,6 @@
-import 'package:arzonuz/data/models/forgot_pass_reeuqest.dart';
-import 'package:arzonuz/data/models/login_request.dart';
-import 'package:arzonuz/data/models/register_request.dart';
+import 'package:arzonuz/data/models/passwords/forgot_pass_reeuqest.dart';
+import 'package:arzonuz/data/models/auth_models/login_request.dart';
+import 'package:arzonuz/data/models/auth_models/register_request.dart';
 import 'package:arzonuz/logic/repositories/auth_repositories.dart';
 import 'package:bloc/bloc.dart';
 

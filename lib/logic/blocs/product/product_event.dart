@@ -9,3 +9,7 @@ class ProductAddEvent extends ProductEvent {
   ProductResponce productResponce;
   ProductAddEvent({required this.productResponce});
 }
+class ProductGetMyProductsEvent extends ProductEvent{}
+
+class ProductGetAllProductsEvent extends ProductEvent{}
+

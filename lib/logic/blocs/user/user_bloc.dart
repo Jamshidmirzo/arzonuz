@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:arzonuz/data/models/change_pass_request.dart';
-import 'package:arzonuz/data/models/update_profile_request.dart';
-import 'package:arzonuz/data/models/user_model.dart';
+import 'package:arzonuz/data/models/passwords/change_pass_request.dart';
+import 'package:arzonuz/data/models/auth_models/update_profile_request.dart';
+import 'package:arzonuz/data/models/auth_models/user_model.dart';
 import 'package:arzonuz/logic/repositories/user_repositories.dart';
 import 'package:bloc/bloc.dart';
 
@@ -64,6 +64,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   }
 
   _getUser(UserGetUserEvent event, emit) async {
+    print('BLocda kriididd');
     try {
       emit(UserLoading());
       final UserModel user = await userRepositories.getUser();

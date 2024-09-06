@@ -1,7 +1,7 @@
-import 'package:arzonuz/data/models/product_responce.dart';
+import 'package:arzonuz/data/models/product_model/product.dart';
+import 'package:arzonuz/data/models/product_model/product_responce.dart';
 import 'package:arzonuz/logic/repositories/product_repository.dart';
 import 'package:bloc/bloc.dart';
-
 
 part 'product_event.dart';
 part 'product_state.dart';
@@ -11,13 +11,43 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ProductBloc() : super(ProductInitial()) {
     on<ProductEvent>((event, emit) {});
     on<ProductAddEvent>(_addProduct);
+    on<ProductGetMyProductsEvent>(_getMyProducts);
+    on<ProductGetAllProductsEvent>(_getProducts);
   }
+
+  _getProducts(ProductGetAllProductsEvent event, emit) async {
+    emit(ProductLoadingState());
+    try {
+      final responce = await productRepository.getAllProducts();
+
+      emit(
+        ProductGetAllProductsState(products: responce!),
+      );
+    } catch (e) {
+      emit(ProductErrorState(message: e.toString()));
+    }
+  }
+
+  _getMyProducts(ProductGetMyProductsEvent event, emit) async {
+    emit(ProductLoadingState());
+    try {
+      final responce = await productRepository.getMyProducts();
+
+      emit(
+        ProductGetProductsState(products: responce!),
+      );
+    } catch (e) {
+      emit(ProductErrorState(message: e.toString()));
+    }
+  }
+
   _addProduct(ProductAddEvent event, emit) async {
     emit(ProductLoadingState());
     try {
       await productRepository.createProduct(event.productResponce);
+      emit(ProductAddedState());
     } catch (e) {
-      rethrow;
+      emit(ProductErrorState(message: e.toString()));
     }
   }
 }

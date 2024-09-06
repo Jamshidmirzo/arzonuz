@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:arzonuz/data/models/change_pass_request.dart';
-import 'package:arzonuz/data/models/update_profile_request.dart';
-import 'package:arzonuz/data/models/user_model.dart';
+import 'package:arzonuz/data/models/passwords/change_pass_request.dart';
+import 'package:arzonuz/data/models/auth_models/update_profile_request.dart';
+import 'package:arzonuz/data/models/auth_models/user_model.dart';
 import 'package:dio/dio.dart';
 
 class UserService {
@@ -36,6 +36,9 @@ class UserService {
   }
 
   Future<UserModel?> getUser(String refreshToken) async {
+    print('serviceda kriididd');
+    print(refreshToken);
+
     final String url = '$baseUrl/user/profile';
     try {
       final response = await dio.get(
@@ -47,11 +50,18 @@ class UserService {
           },
         ),
       );
-      print(response.data);
+      print(response.statusCode);
       if (response.statusCode == 200) {
         return UserModel.fromMap(response.data);
       }
+      if (response.statusCode == 500) {
+        throw ('Serverda erroror');
+      }
     } on DioException catch (dioError) {
+      print(dioError.response?.data);
+      print(dioError.response?.headers);
+      print(dioError.response?.requestOptions);
+
       if (dioError.response != null) {}
       rethrow;
     } catch (e) {

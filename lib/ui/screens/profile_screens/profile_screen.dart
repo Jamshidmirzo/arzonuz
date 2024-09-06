@@ -2,6 +2,8 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
 import 'package:arzonuz/ui/screens/auth_screens/login_screen.dart';
+import 'package:arzonuz/ui/screens/profile_screens/profile_buttons_screens/buttons_screens/add_product_screen.dart';
+import 'package:arzonuz/ui/screens/profile_screens/profile_buttons_screens/buttons_screens/see_my_products.dart';
 import 'package:arzonuz/ui/screens/profile_screens/profile_buttons_screens/profile_sub_screens/address_screen.dart';
 import 'package:arzonuz/ui/screens/profile_screens/profile_buttons_screens/profile_sub_screens/edit_profile_screen.dart';
 import 'package:arzonuz/ui/screens/profile_screens/profile_buttons_screens/profile_sub_screens/payment_screen.dart';
@@ -59,14 +61,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }
 
-
-
-
-
-
-
-
-                
                 if (state is UserLoading) {
                   const Center(
                     child: CircularProgressIndicator(),
@@ -165,18 +159,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           const SizedBox(
                             height: 26,
                           ),
-                          itSeller
+                          user.role == 'seller'
                               ? ProfileButtons(
                                   text: context.tr('addp'),
                                   onTap: () {
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) {
-                                    //       return const SettingsScreen();
-                                    //     },
-                                    //   ),
-                                    // );
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const AddProductScreen();
+                                        },
+                                      ),
+                                    );
+                                  },
+                                )
+                              : const SizedBox(),
+                          user.role == 'seller'
+                              ? ProfileButtons(
+                                  text: 'See my products',
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const SeeMyProducts();
+                                        },
+                                      ),
+                                    );
                                   },
                                 )
                               : const SizedBox(),

@@ -1,5 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:arzonuz/data/models/login_request.dart';
+import 'package:arzonuz/data/models/auth_models/login_request.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/ui/screens/auth_screens/forgot_password_screen.dart';
 import 'package:arzonuz/ui/screens/auth_screens/register_screen.dart';

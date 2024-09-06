@@ -1,4 +1,4 @@
-import 'package:arzonuz/data/models/change_pass_request.dart';
+import 'package:arzonuz/data/models/passwords/change_pass_request.dart';
 import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
 import 'package:arzonuz/ui/widgets/back_button.dart';
 import 'package:arzonuz/ui/widgets/button_with_elevation.dart';

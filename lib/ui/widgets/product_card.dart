@@ -1,10 +1,12 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:arzonuz/data/models/product_model/product.dart';
 import 'package:arzonuz/ui/screens/product_info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 
 class ProductCard extends StatefulWidget {
-  const ProductCard({super.key});
+  final Product product;
+  const ProductCard({super.key, required this.product});
 
   @override
   State<ProductCard> createState() => _ProductCardState();
@@ -21,7 +23,9 @@ class _ProductCardState extends State<ProductCard> {
           context,
           MaterialPageRoute(
             builder: (context) {
-              return const ProductInfoScreen();
+              return ProductInfoScreen(
+                product: widget.product,
+              );
             },
           ),
         );
@@ -66,17 +70,26 @@ class _ProductCardState extends State<ProductCard> {
                       ),
               ),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Men`s Harington Jacket',
+                    widget.product.name,
                   ),
                   Text(
-                    '\$148',
-                    style: TextStyle(
+                    '\$${widget.product.price_without_stock}',
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey,
+                      decoration: TextDecoration.lineThrough,
+                    ),
+                  ),
+                  Text(
+                    '\$${widget.product.price}',
+                    style: const TextStyle(
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

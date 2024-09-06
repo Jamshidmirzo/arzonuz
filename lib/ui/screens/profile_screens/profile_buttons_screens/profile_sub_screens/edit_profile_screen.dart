@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:arzonuz/data/models/update_profile_request.dart';
-import 'package:arzonuz/data/models/user_model.dart';
+import 'package:arzonuz/data/models/auth_models/update_profile_request.dart';
+import 'package:arzonuz/data/models/auth_models/user_model.dart';
 import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
 import 'package:arzonuz/ui/widgets/back_button.dart';
 import 'package:arzonuz/ui/widgets/button_with_elevation.dart';

@@ -1,6 +1,6 @@
-import 'package:arzonuz/data/models/forgot_pass_reeuqest.dart';
-import 'package:arzonuz/data/models/login_request.dart';
-import 'package:arzonuz/data/models/register_request.dart';
+import 'package:arzonuz/data/models/passwords/forgot_pass_reeuqest.dart';
+import 'package:arzonuz/data/models/auth_models/login_request.dart';
+import 'package:arzonuz/data/models/auth_models/register_request.dart';
 import 'package:dio/dio.dart';
 
 class AuthService {
@@ -8,15 +8,26 @@ class AuthService {
   final baseUrl = 'http://13.38.70.151:8085';
 
   Future<String> register(RegisterRequest registerRequest) async {
+    print('Registering user: ${registerRequest.toMap()}');
     try {
       final url = '$baseUrl/auth/register';
-      final responce = await dio.post(
+      final response = await dio.post(
         url,
         data: registerRequest.toMap(),
       );
-      return responce.data['id'];
+      if (response.statusCode == 200) {
+        print('Response data: ${response.data}');
+        if (response.data != null && response.data['id'] != null) {
+          return response.data['id'];
+        } else {
+          throw Exception("ID not found in response");
+        }
+      } else {
+        throw Exception("Failed to register: ${response.statusCode}");
+      }
     } catch (e) {
-      rethrow;
+      print('Registration failed: $e');
+      throw Exception("Error during registration: $e");
     }
   }
 

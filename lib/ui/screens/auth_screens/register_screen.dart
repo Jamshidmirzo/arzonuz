@@ -1,5 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:arzonuz/data/models/register_request.dart';
+import 'package:arzonuz/data/models/auth_models/register_request.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/ui/screens/auth_screens/login_screen.dart';
 import 'package:arzonuz/ui/screens/auth_screens/tell_us_screen.dart';
@@ -89,11 +89,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
           }
           if (state is AuthAuthicated) {
             Navigator.pushReplacement(
-              // ignore: use_build_context_synchronously
               context,
               MaterialPageRoute(
                 builder: (context) {
-                  return const TellUsScreen();
+                  return LoginScreen();
                 },
               ),
             );

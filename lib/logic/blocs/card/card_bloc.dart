@@ -1,5 +1,5 @@
-import 'package:arzonuz/data/models/card.dart';
-import 'package:arzonuz/data/models/card_request.dart';
+import 'package:arzonuz/data/models/card_models/card.dart';
+import 'package:arzonuz/data/models/card_models/card_request.dart';
 import 'package:arzonuz/logic/repositories/card_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
