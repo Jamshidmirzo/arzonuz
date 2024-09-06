@@ -13,6 +13,39 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ProductAddEvent>(_addProduct);
     on<ProductGetMyProductsEvent>(_getMyProducts);
     on<ProductGetAllProductsEvent>(_getProducts);
+    on<ProductAddtoWishlistEvent>(_addToWishlist);
+    on<ProductGetWishlistProductsEvent>(_getWishlist);
+  }
+  _getWishlist(ProductGetWishlistProductsEvent event, emit) async {
+    emit(ProductLoadingState());
+    try {
+      final responce = await productRepository.getWishlist();
+      emit(
+        ProductGetWishlistProductsState(products: responce!),
+      );
+    } catch (e) {
+      emit(
+        ProductErrorState(
+          message: e.toString(),
+        ),
+      );
+    }
+  }
+
+  _addToWishlist(ProductAddtoWishlistEvent event, emit) async {
+    emit(ProductLoadingState());
+    try {
+      final responce = await productRepository.addToWishlist(event.productId);
+      // emit(
+      //   ProductGetWishlistProductsState(products: responce!),
+      // );
+    } catch (e) {
+      emit(
+        ProductErrorState(
+          message: e.toString(),
+        ),
+      );
+    }
   }
 
   _getProducts(ProductGetAllProductsEvent event, emit) async {

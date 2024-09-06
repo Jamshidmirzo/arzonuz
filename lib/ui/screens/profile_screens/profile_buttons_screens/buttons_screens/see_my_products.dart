@@ -40,7 +40,7 @@ class _SeeMyProductsState extends State<SeeMyProducts> {
                 padding: const EdgeInsets.all(20),
                 itemCount: state.products.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.6,
+                    childAspectRatio: 0.5,
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),

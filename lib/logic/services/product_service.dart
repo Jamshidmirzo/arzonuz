@@ -72,4 +72,43 @@ class ProductService {
       rethrow;
     }
   }
+
+  Future<void> addToWishlist(String refreshToken, String productId) async {
+    print(productId);
+    try {
+      final url = '$baseUrl/wishlist/$productId';
+      final responce = await dio.post(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': refreshToken,
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      print(responce.data);
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<Map<String, dynamic>?> getWishlist(String refreshToken) async {
+    try {
+      final url = '$baseUrl/wishlist';
+      final responce = await dio.get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': refreshToken,
+            'Content-Type': 'application/json',
+          },
+        ),
+      );
+      if (responce.statusCode == 200) {
+        return responce.data;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

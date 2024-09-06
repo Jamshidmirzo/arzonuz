@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// ignore_for_file: public_member_api_docs, sort_constructors_first, non_constant_identifier_names
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
@@ -85,21 +85,22 @@ class Product {
 
   factory Product.fromMap(Map<String, dynamic> map) {
     return Product(
-      color: List.from((map['color'] ?? [])),
+      color: List.from(
+        (map['color'] ?? []),
+      ),
       description: map['description'] as String,
       end_date: map['end_date'] as String,
       id: map['id'] as String,
-      limit_of_product: (map['limit_of_product'] as num?)?.toInt() ??
-          0, // Convert to int safely
+      limit_of_product: (map['limit_of_product'] as num?)?.toInt() ?? 0,
       name: map['name'] as String,
       photos: List.from((map['photos'] ?? [])),
-      price: (map['price'] as num?)?.toInt() ?? 0, 
+      price: (map['price'] as num?)?.toInt() ?? 0,
       price_without_stock: (map['price_without_stock'] as num?)?.toInt() ??
           0, // Convert to int safely
       seller_id: map['seller_id'] as String,
       size: List.from((map['size'] ?? [])),
       start_date: map['start_date'] as String,
-      stock: (map['stock'] as num?)?.toInt() ?? 0, 
+      stock: (map['stock'] as num?)?.toInt() ?? 0,
     );
   }
 

@@ -15,6 +15,11 @@ class ProductGetProductsState extends ProductState {
   List<Product> products;
   ProductGetProductsState({required this.products});
 }
+class ProductGetWishlistProductsState extends ProductState {
+   List<Product> products;
+  
+  ProductGetWishlistProductsState({required this.products});
+}
 
 class ProductGetAllProductsState extends ProductState {
   List<Product> products;

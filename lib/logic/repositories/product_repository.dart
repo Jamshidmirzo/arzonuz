@@ -66,4 +66,47 @@ class ProductRepository {
       rethrow;
     }
   }
+
+  addToWishlist(String productId) async {
+    try {
+      final shared = await SharedPreferences.getInstance();
+      String? refreshToken = shared.getString('refreshToken');
+      if (refreshToken != null) {
+        final responce =
+            await productService.addToWishlist(refreshToken, productId);
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future< List<Product>?> getWishlist() async {
+    try {
+      final shared = await SharedPreferences.getInstance();
+      String? refreshToken = shared.getString('refreshToken');
+      if (refreshToken != null) {
+        final responce = await productService.getWishlist(refreshToken);
+         if (responce != null) {
+          List<Product> products = [];
+          for (var element in responce['wish_list']) {
+            products.add(Product.fromMap(element));
+          }
+          print(products.first.name);
+          return products;
+        }
+
+        //  if (responce != null) {
+        //   List<Product> products = [];
+        //   for (var element in responce['product']) {
+        //     print(element);
+        //     print(Product.fromMap(element));
+        //     products.add(Product.fromMap(element));
+        //   }
+        //   print(products.first.name);
+        //   return products;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
 }

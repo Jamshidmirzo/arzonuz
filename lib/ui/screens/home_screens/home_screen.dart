@@ -1,4 +1,5 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
 import 'package:arzonuz/ui/screens/filters_screens/filter_screen.dart';
 import 'package:arzonuz/ui/screens/home_screens/products_list_view.dart';
@@ -129,7 +130,6 @@ class _HomeScreenState extends State<HomeScreen> {
             const CategoryListView(),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
-                print(state);
                 if (state is ProductErrorState) {
                   return Center(
                     child: Text(state.message),
@@ -141,40 +141,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }
                 if (state is ProductGetAllProductsState) {
-                  print('qwertytrewqwertrew');
                   print(state.products);
-                  final products = state.products;
-                  // return SizedBox(
-                  //   height: 350,
-                  //   child: ListView.separated(
-                  //     padding: const EdgeInsets.only(left: 20),
-                  //     itemCount: products.length,
-                  //     separatorBuilder: (context, index) {
-                  //       return const SizedBox(
-                  //         width: 10,
-                  //       );
-                  //     },
-                  //     scrollDirection: Axis.horizontal,
-                  //     itemBuilder: (context, index) {
-                  //       final product = products[index];
-                  //       return ProductCard(
-                  //         product: product,
-                  //       );
-                  //     },
-                  //   ),
-                  // );
-
                   return Column(
                     children: [
                       SizedBox(
-                        height: 460,
+                        height: 480,
                         child: ProductsListView(
                           firstText: context.tr('ts'),
                           products: state.products,
                         ),
                       ),
                       SizedBox(
-                        height: 460,
+                        height: 480,
                         child: ProductsListView(
                           products: state.products,
                           firstText: context.tr('nIn'),

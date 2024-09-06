@@ -52,7 +52,7 @@ class ProductsListView extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 350,
+          height: 370,
           child: ListView.separated(
             padding: const EdgeInsets.only(left: 20),
             itemCount: products.length,
@@ -69,7 +69,6 @@ class ProductsListView extends StatelessWidget {
               );
             },
           ),
-       
         ),
         const SizedBox(
           height: 20,

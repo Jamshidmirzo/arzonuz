@@ -7,6 +7,7 @@ class FeedbackService {
 
   Future<FeedbackRequest?> getFeedbacks(
       String refreshToken, String productId) async {
+    print(productId);
     try {
       final url = '$baseUrl/feedback/$productId';
       final responce = await dio.get(
@@ -18,6 +19,7 @@ class FeedbackService {
           },
         ),
       );
+
       if (responce.statusCode == 200) {
         return FeedbackRequest.fromMap(responce.data);
       }

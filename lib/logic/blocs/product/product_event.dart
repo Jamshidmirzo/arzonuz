@@ -2,14 +2,21 @@
 
 part of 'product_bloc.dart';
 
-
 sealed class ProductEvent {}
 
 class ProductAddEvent extends ProductEvent {
   ProductResponce productResponce;
   ProductAddEvent({required this.productResponce});
 }
-class ProductGetMyProductsEvent extends ProductEvent{}
 
-class ProductGetAllProductsEvent extends ProductEvent{}
+class ProductGetMyProductsEvent extends ProductEvent {}
 
+class ProductGetWishlistProductsEvent extends ProductEvent {}
+
+
+class ProductAddtoWishlistEvent extends ProductEvent {
+  String productId;
+  ProductAddtoWishlistEvent({required this.productId});
+}
+
+class ProductGetAllProductsEvent extends ProductEvent {}
