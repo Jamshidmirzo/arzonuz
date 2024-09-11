@@ -50,7 +50,7 @@ class UserService {
           },
         ),
       );
-      print(response.statusCode);
+      print(response.data);
       if (response.statusCode == 200) {
         return UserModel.fromMap(response.data);
       }
@@ -98,9 +98,15 @@ class UserService {
 
     print('FIELELLEELE"$file');
     try {
+      final FormData formData = FormData.fromMap(
+        {
+          'file': MultipartFile.fromBytes(file.readAsBytesSync()),
+        },
+      );
+
       final response = await dio.post(
         url,
-        data: file,
+        data: formData, // use formData here
         options: Options(
           headers: {
             'Authorization': refreshToken,
@@ -108,6 +114,8 @@ class UserService {
           },
         ),
       );
+      print('qwertytrewqwertytre repsococejeeeeedan');
+      print(response.data);
 
       // Handle the response
       if (response.statusCode == 200) {

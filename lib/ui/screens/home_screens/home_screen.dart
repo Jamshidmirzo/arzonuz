@@ -4,6 +4,7 @@ import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
 import 'package:arzonuz/ui/screens/filters_screens/filter_screen.dart';
 import 'package:arzonuz/ui/screens/home_screens/products_list_view.dart';
 import 'package:arzonuz/ui/widgets/category_list_view.dart';
+import 'package:arzonuz/ui/widgets/product_card.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -127,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(
               height: 10,
             ),
-            const CategoryListView(),
+            // const CategoryListView(),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
                 if (state is ProductErrorState) {
@@ -142,24 +143,40 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 if (state is ProductGetAllProductsState) {
                   print(state.products);
-                  return Column(
-                    children: [
-                      SizedBox(
-                        height: 480,
-                        child: ProductsListView(
-                          firstText: context.tr('ts'),
-                          products: state.products,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 480,
-                        child: ProductsListView(
-                          products: state.products,
-                          firstText: context.tr('nIn'),
-                        ),
-                      ),
-                    ],
+                  return SizedBox(
+                    height: 570,
+                    child: GridView.builder(
+                      padding: const EdgeInsets.all(10),
+                      itemCount: state.products.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              childAspectRatio: 0.54,
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 10),
+                      itemBuilder: (context, index) {
+                        return ProductCard(product: state.products[index]);
+                      },
+                    ),
                   );
+                  // return Column(
+                  //   children: [
+                  //     SizedBox(
+                  //       height: 480,
+                  //       child: ProductsListView(
+                  //         firstText: context.tr('ts'),
+                  //         products: state.products,
+                  //       ),
+                  //     ),
+                  //     SizedBox(
+                  //       height: 480,
+                  //       child: ProductsListView(
+                  //         products: state.products,
+                  //         firstText: context.tr('nIn'),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // );
                 }
                 return const Center(
                   child: Text("No Products"),

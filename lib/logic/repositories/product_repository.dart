@@ -80,19 +80,23 @@ class ProductRepository {
     }
   }
 
-  Future< List<Product>?> getWishlist() async {
+  Future<List<Product>?> getWishlist() async {
     try {
       final shared = await SharedPreferences.getInstance();
       String? refreshToken = shared.getString('refreshToken');
       if (refreshToken != null) {
         final responce = await productService.getWishlist(refreshToken);
-         if (responce != null) {
+        if (responce != null) {
           List<Product> products = [];
           for (var element in responce['wish_list']) {
+            print('qwertgh');
+            print(element);
             products.add(Product.fromMap(element));
           }
-          print(products.first.name);
+
           return products;
+        } else {
+          return null;
         }
 
         //  if (responce != null) {

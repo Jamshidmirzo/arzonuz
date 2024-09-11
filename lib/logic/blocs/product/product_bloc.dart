@@ -15,14 +15,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
     on<ProductGetAllProductsEvent>(_getProducts);
     on<ProductAddtoWishlistEvent>(_addToWishlist);
     on<ProductGetWishlistProductsEvent>(_getWishlist);
+    on<ProductAddtoSharedWishlistEvent>(_addToShared);
   }
+  _addToShared(ProductAddtoSharedWishlistEvent event, emit) {}
   _getWishlist(ProductGetWishlistProductsEvent event, emit) async {
     emit(ProductLoadingState());
     try {
       final responce = await productRepository.getWishlist();
-      emit(
-        ProductGetWishlistProductsState(products: responce!),
-      );
+      if (responce != null) {
+        emit(
+          ProductGetWishlistProductsState(products: responce),
+        );
+      } else {
+        emit(ProductInitial());
+      }
     } catch (e) {
       emit(
         ProductErrorState(

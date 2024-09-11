@@ -52,9 +52,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
       ),
       body: BlocBuilder<CardBloc, CardState>(
         builder: (context, state) {
+          print(state);
           if (state is CardError) {
             return Center(
               child: Text(state.message),
+            );
+          }
+          if (state is CardNothing) {
+            return const Center(
+              child: Text("You don't have any cards."),
             );
           }
           if (state is CardLoaded) {
@@ -65,60 +71,74 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   Expanded(
                     child: ListView.separated(
                       separatorBuilder: (context, index) {
-                        return const SizedBox(
-                          height: 20,
-                        );
+                        return const SizedBox(height: 20);
                       },
                       itemCount: state.cards.length,
                       itemBuilder: (context, index) {
                         final card = state.cards[index];
-                        return ZoomTapAnimation(
-                          onTap: () {},
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 19),
-                            width: double.infinity,
-                            height: 80,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: AdaptiveTheme.of(context).mode ==
-                                      AdaptiveThemeMode.light
-                                  ? Colors.grey.shade300
-                                  : const Color(0xFF342F3F),
-                            ),
-                            child: Row(
-                              children: [
-                                Text(
-                                  maskCardNumber(card.card_number),
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Image.asset('assets/images/uzcard.png'),
-                                const Spacer(),
-                                Image.asset(
-                                  'assets/icons/back_v.png',
-                                  color: AdaptiveTheme.of(context).mode ==
-                                          AdaptiveThemeMode.light
-                                      ? const Color(0xFF342F3F)
-                                      : Colors.grey.shade300,
-                                  width: 24,
-                                  height: 24,
-                                ),
-                              ],
+                        return Dismissible(
+                          key: Key(
+                              card.id.toString()), // Unique key for each card
+                          direction: DismissDirection.endToStart,
+                          background: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            alignment: Alignment.centerRight,
+                            color: Colors.red,
+                            child:
+                                const Icon(Icons.delete, color: Colors.white),
+                          ),
+                          onDismissed: (direction) {
+                            context
+                                .read<CardBloc>()
+                                .add(CardDeleteEvent(cardId: card.card_number));
+                          },
+                          child: ZoomTapAnimation(
+                            onTap: () {},
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16, vertical: 19),
+                              width: double.infinity,
+                              height: 80,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AdaptiveTheme.of(context).mode ==
+                                        AdaptiveThemeMode.light
+                                    ? Colors.grey.shade300
+                                    : const Color(0xFF342F3F),
+                              ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    maskCardNumber(card.card_number),
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Image.asset('assets/images/uzcard.png'),
+                                  const Spacer(),
+                                  Image.asset(
+                                    'assets/icons/back_v.png',
+                                    color: AdaptiveTheme.of(context).mode ==
+                                            AdaptiveThemeMode.light
+                                        ? const Color(0xFF342F3F)
+                                        : Colors.grey.shade300,
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             );
           }
+
           return Container();
         },
       ),

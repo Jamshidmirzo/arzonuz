@@ -26,6 +26,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       emit(
         UserUpdatePhoto(),
       );
+
     } catch (e) {
       emit(
         UserError(

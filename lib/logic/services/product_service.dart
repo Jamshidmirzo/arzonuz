@@ -104,9 +104,11 @@ class ProductService {
           },
         ),
       );
+      print(responce.data);
       if (responce.statusCode == 200) {
         return responce.data;
       }
+      return null;
     } catch (e) {
       rethrow;
     }

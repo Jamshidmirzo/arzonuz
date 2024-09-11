@@ -1,3 +1,4 @@
+import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
@@ -17,6 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     _checkAuthStatus();
+    context.read<UserBloc>().add(UserGetUserEvent());
   }
 
   void _checkAuthStatus() async {
@@ -37,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.deepPurple,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-
           if (state is AuthAuthicated) {
             Navigator.pushReplacement(
               context,

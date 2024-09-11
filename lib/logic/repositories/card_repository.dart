@@ -18,22 +18,36 @@ class CardRepository {
     }
   }
 
-  Future<List<CardModel>?> getCards() async {
+  deleteCard(String cardId) async {
     try {
       final shared = await SharedPreferences.getInstance();
       String? refreshToken = shared.getString('refreshToken');
       if (refreshToken != null) {
-        final responce = await cardService.getCards(refreshToken);
-        print(responce);
-        List<CardModel> cards = [];
-        for (var element in responce!['cards']) {
-          cards.add(
-            CardModel.fromMap(element),
-          );
-        }
-        return cards;
+        return cardService.removeCard(refreshToken, cardId);
       }
     } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<List<CardModel>?> getCards() async {
+    try {
+      final shared = await SharedPreferences.getInstance();
+      String? refreshToken = shared.getString('refreshToken');
+
+      if (refreshToken == null) {
+        return null;
+      }
+
+      final response = await cardService.getCards(refreshToken);
+
+      if (response != null && response['cards'] != null) {
+        return (response['cards'] as List)
+            .map((element) => CardModel.fromMap(element))
+            .toList();
+      }
+    } catch (e) {
+      print("Repository Error: $e");
       rethrow;
     }
     return null;

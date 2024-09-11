@@ -9,6 +9,9 @@ final class CardInitial extends CardState {}
 
 final class CardAdded extends CardState {}
 
+final class CardNothing extends CardState {}
+
+
 final class CardLoaded extends CardState {
   List<CardModel> cards;
   CardLoaded({required this.cards});

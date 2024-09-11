@@ -220,7 +220,7 @@ class _ProductInfoScreenState extends State<ProductInfoScreen> {
                   ),
                   const Spacer(),
                   Expanded(
-                    flex: 8,
+                    flex: 9,
                     child: Row(
                       children: [
                         _buildTimeBox(_days.toString(), 'Days'),

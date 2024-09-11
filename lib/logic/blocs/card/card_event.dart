@@ -11,3 +11,8 @@ class CardAddEvent extends CardEvent {
 }
 
 class CardGetEvent extends CardEvent {}
+
+class CardDeleteEvent extends CardEvent {
+  String cardId;
+  CardDeleteEvent({required this.cardId});
+}

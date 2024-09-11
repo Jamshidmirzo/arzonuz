@@ -75,194 +75,196 @@ class LoginScreen extends StatelessWidget {
           }
           return Padding(
             padding: const EdgeInsets.all(20),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    context.tr('login'),
-                    style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
-                  ),
-                  const SizedBox(height: 32),
-                  TextInputWidget(
-                    controller: emailController,
-                    name: context.tr('email'),
-                    labelText: 'Email',
-                    validator: (p0) {
-                      if (p0 == null || p0.isEmpty) {
-                        return 'Input your email';
-                      }
-                      return null;
-                    },
-                  ),
-                  TextInputWidget(
-                    controller: passController,
-                    name: context.tr('pass'),
-                    labelText: 'Password',
-                    validator: (p0) {
-                      if (p0 == null || p0.isEmpty) {
-                        return 'Input your password';
-                      }
-                      return null;
-                    },
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: GestureDetector(
+            child: SingleChildScrollView(
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      context.tr('login'),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 32),
+                    ),
+                    const SizedBox(height: 32),
+                    TextInputWidget(
+                      controller: emailController,
+                      name: context.tr('email'),
+                      labelText: 'Email',
+                      validator: (p0) {
+                        if (p0 == null || p0.isEmpty) {
+                          return 'Input your email';
+                        }
+                        return null;
+                      },
+                    ),
+                    TextInputWidget(
+                      controller: passController,
+                      name: context.tr('pass'),
+                      labelText: 'Password',
+                      validator: (p0) {
+                        if (p0 == null || p0.isEmpty) {
+                          return 'Input your password';
+                        }
+                        return null;
+                      },
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return const ForgotPasswordScreen();
+                              },
+                            ),
+                          );
+                        },
+                        child: Text(
+                          context.tr('fpass'),
+                          style: TextStyle(
+                            color: AdaptiveTheme.of(context).mode ==
+                                    AdaptiveThemeMode.light
+                                ? Colors.deepPurple
+                                : Colors.white,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ButtonWithElevation(
+                      onPressed: () => submit(context),
+                      bgColor: Colors.deepPurple.shade300,
+                      child: Text(
+                        context.tr('login'),
+                        style:
+                            const TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ZoomTapAnimation(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const ForgotPasswordScreen();
+                              return const RegisterScreen();
                             },
                           ),
                         );
                       },
-                      child: Text(
-                        context.tr('fpass'),
-                        style: TextStyle(
-                          color: AdaptiveTheme.of(context).mode ==
-                                  AdaptiveThemeMode.light
-                              ? Colors.deepPurple
-                              : Colors.white,
+                      child: RichText(
+                        text: TextSpan(
+                          text: context.tr('dre'),
+                          style: TextStyle(
+                            color: AdaptiveTheme.of(context).mode ==
+                                    AdaptiveThemeMode.light
+                                ? Colors.black
+                                : Colors.white,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: context.tr('dreg'),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: AdaptiveTheme.of(context).mode ==
+                                        AdaptiveThemeMode.light
+                                    ? Colors.red
+                                    : Colors.red,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  ButtonWithElevation(
-                    onPressed: () => submit(context),
-                    bgColor: Colors.deepPurple.shade300,
-                    child: Text(
-                      context.tr('login'),
-                      style: const TextStyle(fontSize: 16, color: Colors.white),
+                    const SizedBox(
+                      height: 20,
                     ),
-                  ),
-                
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ZoomTapAnimation(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return const RegisterScreen();
-                          },
-                        ),
-                      );
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: context.tr('dre'),
-                        style: TextStyle(
-                          color: AdaptiveTheme.of(context).mode ==
-                                  AdaptiveThemeMode.light
-                              ? Colors.black
-                              : Colors.white,
-                        ),
+                    ButtonWithElevation(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextSpan(
-                            text: context.tr('dreg'),
+                          Image.asset(
+                            'assets/icons/apple.png',
+                            width: 20,
+                            height: 24,
+                          ),
+                          const Spacer(),
+                          Text(
+                            context.tr('capple'),
                             style: TextStyle(
-                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
                               color: AdaptiveTheme.of(context).mode ==
                                       AdaptiveThemeMode.light
-                                  ? Colors.red
-                                  : Colors.red,
+                                  ? Colors.black
+                                  : Colors.white,
                             ),
                           ),
+                          const Spacer(),
                         ],
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ButtonWithElevation(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/icons/apple.png',
-                          width: 20,
-                          height: 24,
-                        ),
-                        const Spacer(),
-                        Text(
-                          context.tr('capple'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AdaptiveTheme.of(context).mode ==
-                                    AdaptiveThemeMode.light
-                                ? Colors.black
-                                : Colors.white,
+                    ButtonWithElevation(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/icons/google.png',
+                            width: 20,
+                            height: 24,
                           ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  ),
-                  ButtonWithElevation(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/icons/google.png',
-                          width: 20,
-                          height: 24,
-                        ),
-                        const Spacer(),
-                        Text(
-                          context.tr('cgoogle'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AdaptiveTheme.of(context).mode ==
-                                    AdaptiveThemeMode.light
-                                ? Colors.black
-                                : Colors.white,
+                          const Spacer(),
+                          Text(
+                            context.tr('cgoogle'),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AdaptiveTheme.of(context).mode ==
+                                      AdaptiveThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
                           ),
-                        ),
-                        const Spacer(),
-                      ],
+                          const Spacer(),
+                        ],
+                      ),
                     ),
-                  ),
-                  ButtonWithElevation(
-                    onPressed: () {},
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
-                          Icons.facebook,
-                          color: Colors.blue,
-                          size: 24,
-                        ),
-                        const Spacer(),
-                        Text(
-                          context.tr('cfacebook'),
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: AdaptiveTheme.of(context).mode ==
-                                    AdaptiveThemeMode.light
-                                ? Colors.black
-                                : Colors.white,
+                    ButtonWithElevation(
+                      onPressed: () {},
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Icon(
+                            Icons.facebook,
+                            color: Colors.blue,
+                            size: 24,
                           ),
-                        ),
-                        const Spacer(),
-                      ],
-                    ),
-                  )
-                ],
+                          const Spacer(),
+                          Text(
+                            context.tr('cfacebook'),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: AdaptiveTheme.of(context).mode ==
+                                      AdaptiveThemeMode.light
+                                  ? Colors.black
+                                  : Colors.white,
+                            ),
+                          ),
+                          const Spacer(),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           );
-       
-       },
+        },
       ),
     );
   }

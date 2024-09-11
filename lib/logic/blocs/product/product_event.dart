@@ -19,4 +19,9 @@ class ProductAddtoWishlistEvent extends ProductEvent {
   ProductAddtoWishlistEvent({required this.productId});
 }
 
+class ProductAddtoSharedWishlistEvent extends ProductEvent {
+  String productId;
+  ProductAddtoSharedWishlistEvent({required this.productId});
+}
+
 class ProductGetAllProductsEvent extends ProductEvent {}

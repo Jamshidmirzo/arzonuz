@@ -84,25 +84,22 @@ class Product {
   }
 
   factory Product.fromMap(Map<String, dynamic> map) {
-    return Product(
-      color: List.from(
-        (map['color'] ?? []),
-      ),
-      description: map['description'] as String,
-      end_date: map['end_date'] as String,
-      id: map['id'] as String,
-      limit_of_product: (map['limit_of_product'] as num?)?.toInt() ?? 0,
-      name: map['name'] as String,
-      photos: List.from((map['photos'] ?? [])),
-      price: (map['price'] as num?)?.toInt() ?? 0,
-      price_without_stock: (map['price_without_stock'] as num?)?.toInt() ??
-          0, // Convert to int safely
-      seller_id: map['seller_id'] as String,
-      size: List.from((map['size'] ?? [])),
-      start_date: map['start_date'] as String,
-      stock: (map['stock'] as num?)?.toInt() ?? 0,
-    );
-  }
+  return Product(
+    color: List<String>.from(map['color'] ?? []), // Explicitly cast to List<String>
+    description: map['description'] as String,
+    end_date: map['end_date'] as String,
+    id: map['id'] as String,
+    limit_of_product: (map['limit_of_product'] as num?)?.toInt() ?? 0,
+    name: map['name'] as String,
+    photos: List<String>.from(map['photos'] ?? []), // Explicitly cast to List<String>
+    price: (map['price'] as num?)?.toInt() ?? 0,
+    price_without_stock: (map['price_without_stock'] as num?)?.toInt() ?? 0,
+    seller_id: map['seller_id'] as String,
+    size: List<String>.from(map['size'] ?? []), // Explicitly cast to List<String>
+    start_date: map['start_date'] as String,
+    stock: (map['stock'] as num?)?.toInt() ?? 0,
+  );
+}
 
   String toJson() => json.encode(toMap());
 

@@ -25,10 +25,41 @@ class CardService {
     }
   }
 
-  Future<Map<String, dynamic>?> getCards(String refreshToken) async {
+ Future<Map<String, dynamic>?> getCards(String refreshToken) async {
+  try {
+    final url = '$baseUrl/cards';
+    final response = await dio.get(
+      url,
+      options: Options(
+        headers: {
+          'Authorization': refreshToken,
+          'Content-Type': 'application/json',
+        },
+      ),
+    );
+
+    // Handle HTTP response status code
+    if (response.statusCode == 200 && response.data is Map<String, dynamic>) {
+      return response.data;  // Return valid data
+    } else {
+      return null;  // Return null for unexpected responses
+    }
+  } on DioException catch (dioError) {
+    // Log Dio error details, but avoid exposing to end-users
+    print("DioError: ${dioError.message}");
+    rethrow;  // Re-throw to be caught by the repository or BLoC
+  } catch (e) {
+    // Handle unexpected errors
+    print("Error: $e");
+    rethrow;
+  }
+}
+
+
+  Future<void> removeCard(String refreshToken, String cardId) async {
     try {
-      final url = '$baseUrl/cards';
-      final responce = await dio.get(
+      final url = '$baseUrl/cards/$cardId';
+      final responce = await dio.delete(
         url,
         options: Options(
           headers: {
@@ -38,15 +69,10 @@ class CardService {
         ),
       );
       print(responce.data);
-      if (responce.statusCode == 200) {
-        return responce.data;
-      }
-      print(responce.data);
     } on DioException {
       rethrow;
     } catch (e) {
       rethrow;
     }
-    return null;
   }
 }

@@ -25,7 +25,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   bool itSeller = false;
   bool isLoading = false;
-
   @override
   void initState() {
     super.initState();
@@ -33,8 +32,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _loadSellerStatus() async {
-    print("bunga keldi");
-    context.read<UserBloc>().add(UserGetUserEvent());
+    // context.read<UserBloc>().add(UserGetUserEvent());
     final shared = await SharedPreferences.getInstance();
     String? itsSellerfromShared = shared.getString('seller');
     setState(() {
@@ -53,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             )
           : BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
+                print(state);
                 if (state is UserError) {
                   return Center(
                     child: Text(
@@ -68,6 +67,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }
                 if (state is UserLoaded) {
                   final user = state.user;
+                  print(user);
                   return Padding(
                     padding: const EdgeInsets.all(20),
                     child: SingleChildScrollView(

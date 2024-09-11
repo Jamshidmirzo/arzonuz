@@ -29,46 +29,42 @@ class _WishlistScreenState extends State<WishlistScreen> {
           "Wishlist(12)",
         ),
       ),
-      body: BlocBuilder<ProductBloc, ProductState>(builder: (context, state) {
-        if (state is ProductErrorState) {
-          print(state);
-          return Center(
-            child: Text(state.message),
-          );
-        }
-        if (state is ProductGetWishlistProductsState) {
-          print(state.products);
-        }
-        return Padding(
-          padding: const EdgeInsets.all(20),
-          child: GridView.builder(
-            itemCount: 10,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                childAspectRatio: 0.5,
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10),
-            itemBuilder: (context, index) {
-              return ProductCard(
-                product: Product(
-                    color: [],
-                    description: '',
-                    end_date: '',
-                    id: '',
-                    limit_of_product: 10,
-                    name: 'Somsa',
-                    photos: [],
-                    price: 12,
-                    price_without_stock: 13,
-                    seller_id: '',
-                    size: [],
-                    start_date: '',
-                    stock: 0),
-              );
-            },
-          ),
-        );
-      }),
+      body: BlocBuilder<ProductBloc, ProductState>(
+        builder: (context, state) {
+          if (state is ProductErrorState) {
+            print('wishlistititi');
+            print(state);
+            return Center(
+              child: Text(state.message),
+            );
+          }
+          if (state is ProductInitial) {
+            print(state);
+            return Center(
+              child: Text('YOu dont hasve a wishlist'),
+            );
+          }
+          if (state is ProductGetWishlistProductsState) {
+            print(state.products);
+            return Padding(
+              padding: const EdgeInsets.all(20),
+              child: GridView.builder(
+                itemCount: state.products.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 0.5,
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemBuilder: (context, index) {
+                  final product = state.products[index];
+                  return ProductCard(product: product);
+                },
+              ),
+            );
+          }
+          return Container();
+        },
+      ),
     );
   }
 }

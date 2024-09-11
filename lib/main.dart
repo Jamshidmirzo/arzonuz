@@ -1,6 +1,7 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/logic/blocs/card/card_bloc.dart';
+import 'package:arzonuz/logic/blocs/favourite/favourite_bloc.dart';
 import 'package:arzonuz/logic/blocs/feedback/feedback_bloc.dart';
 import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
 import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
@@ -55,6 +56,9 @@ class MyApp extends StatelessWidget {
         ),
           BlocProvider(
           create: (context) => FeedbackBloc(),
+        ),
+          BlocProvider(
+          create: (context) => FavoriteBloc(),
         ),
       ],
       child: AdaptiveTheme(

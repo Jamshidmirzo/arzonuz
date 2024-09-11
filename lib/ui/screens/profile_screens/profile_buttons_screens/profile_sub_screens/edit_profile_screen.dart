@@ -73,6 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
           );
       if (_selectedImage != null) {
+        print(_selectedImage);
         context.read<UserBloc>().add(
               UserUpdatePhotoEvent(
                 file: File(_selectedImage!.path),
