@@ -1,20 +1,29 @@
+import 'dart:io';
+
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:arzonuz/logic/blocs/auth/auth_bloc.dart';
-import 'package:arzonuz/logic/blocs/card/card_bloc.dart';
-import 'package:arzonuz/logic/blocs/favourite/favourite_bloc.dart';
-import 'package:arzonuz/logic/blocs/feedback/feedback_bloc.dart';
-import 'package:arzonuz/logic/blocs/product/product_bloc.dart';
-import 'package:arzonuz/logic/blocs/user/user_bloc.dart';
-import 'package:arzonuz/logic/cubits/button_cubit.dart';
-import 'package:arzonuz/logic/cubits/filter_cubit.dart';
-import 'package:arzonuz/ui/screens/splash_screen/splash_screen.dart';
+import 'package:arzonuz/features/arzonuz/data/datasources/auth_datasources.dart';
+import 'package:arzonuz/features/arzonuz/data/repositories/auth_repositories.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_login_usecases.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_register_usecases.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/card/card_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/favourite/favourite_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/feedback/feedback_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/process/process_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/product/product_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/user/user_bloc.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/button_cubit.dart';
+import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/filter_cubit.dart';
+import 'package:arzonuz/features/arzonuz/presentation/pages/splash_screen/splash_screen.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'sevice_locator.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await di.init();
   runApp(
     EasyLocalization(
       supportedLocales: const [
@@ -43,7 +52,16 @@ class MyApp extends StatelessWidget {
           create: (context) => FilterCubit(),
         ),
         BlocProvider(
-          create: (context) => AuthBloc(),
+          create: (context) => AuthBloc(
+            authRegisterUsecase: AuthRegisterUsecases(
+              authRepositories:
+                  AuthRepositoriesImpl(authDatasources: AuthDatasources()),
+            ),
+            authLoginUsecases: AuthLoginUsecases(
+              authRepositories:
+                  AuthRepositoriesImpl(authDatasources: AuthDatasources()),
+            ),
+          ),
         ),
         BlocProvider(
           create: (context) => UserBloc(),
@@ -54,11 +72,14 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ProductBloc(),
         ),
-          BlocProvider(
+        BlocProvider(
           create: (context) => FeedbackBloc(),
         ),
-          BlocProvider(
+        BlocProvider(
           create: (context) => FavoriteBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProcessBloc(),
         ),
       ],
       child: AdaptiveTheme(
