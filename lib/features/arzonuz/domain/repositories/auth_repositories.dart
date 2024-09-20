@@ -1,15 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:arzonuz/features/arzonuz/data/models/auth_models/login_request.dart';
-import 'package:arzonuz/features/arzonuz/data/models/auth_models/register_request.dart';
-import 'package:arzonuz/features/arzonuz/data/models/passwords/forgot_pass_reeuqest.dart';
+import 'package:arzonuz/core/error/failure.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_forgot_pass_usecases.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_login_usecases.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_register_usecases.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_reset_usecases.dart';
+import 'package:dartz/dartz.dart';
 
 abstract class AuthRepositories {
-  Future<void> login(LoginRequest loginRequest);
-  Future<void> forgotPassword(String email);
-  Future<void> resetPassword(ForgotPassRequest forgotPassRequest);
-  Future<void> logOut();
-  Future<void> register(RegisterRequest registerRequest);
-
+  Future<Either<Failure,Map<String, dynamic>>> login(AuthLoginParams loginRequest);
+  Future<Either<Failure,void>> forgotPassword(AuthForgotParams email);
+  Future<Either<Failure,void>> resetPassword(ResetPassRequestParams forgotPassRequest);
+ Future<Either<Failure,void>> logOut();
+  Future<Either<Failure,String>> register(AuthRegisterParams registerRequest);
 }
 
 

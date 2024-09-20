@@ -15,6 +15,7 @@ import 'package:arzonuz/features/arzonuz/presentation/blocs/user/user_bloc.dart'
 import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/button_cubit.dart';
 import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/filter_cubit.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/splash_screen/splash_screen.dart';
+import 'package:arzonuz/sevice_locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,16 +53,7 @@ class MyApp extends StatelessWidget {
           create: (context) => FilterCubit(),
         ),
         BlocProvider(
-          create: (context) => AuthBloc(
-            authRegisterUsecase: AuthRegisterUsecases(
-              authRepositories:
-                  AuthRepositoriesImpl(authDatasources: AuthDatasources()),
-            ),
-            authLoginUsecases: AuthLoginUsecases(
-              authRepositories:
-                  AuthRepositoriesImpl(authDatasources: AuthDatasources()),
-            ),
-          ),
+          create: (context) => sl<AuthBloc>(),
         ),
         BlocProvider(
           create: (context) => UserBloc(),

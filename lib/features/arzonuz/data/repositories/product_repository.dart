@@ -95,8 +95,6 @@ class ProductRepository {
         if (responce != null) {
           List<Product> products = [];
           for (var element in responce['wish_list']) {
-            print('qwertgh');
-            print(element);
             products.add(Product.fromMap(element));
           }
 
@@ -118,5 +116,6 @@ class ProductRepository {
     } catch (e) {
       rethrow;
     }
+    return null;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:arzonuz/features/arzonuz/data/models/auth_models/register_request.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_register_usecases.dart';
 import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/login_screen.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/tell_us_screen.dart';
@@ -45,14 +46,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       context.read<AuthBloc>().add(
-            AuthRegisterEvent(
-              registerRequest: RegisterRequest(
-                address: addressController.text,
-                email: emailController.text,
-                fullname: nameController.text,
-                password: passController.text,
-                phone: phoneController.text,
-                role: _selectedUserType.toLowerCase(),
+            AuthEvent.authRegister(
+              AuthRegisterParams(
+                registerRequest: RegisterRequest(
+                  address: addressController.text,
+                  email: emailController.text,
+                  fullname: nameController.text,
+                  password: passController.text,
+                  phone: phoneController.text,
+                  role: _selectedUserType.toLowerCase(),
+                ),
               ),
             ),
           );
@@ -64,39 +67,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthError) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("OK"),
-                    )
-                  ],
-                  title: Text(state.message),
+          state.status == Status.UNAUTHICATED
+              ? showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("OK"),
+                        )
+                      ],
+                      title: Text(state.message ?? ''),
+                    );
+                  },
+                )
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return LoginScreen();
+                    },
+                  ),
                 );
-              },
-            );
-          }
-          if (state is AuthAuthicated) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return LoginScreen();
-                },
-              ),
-            );
-          }
         },
         child: Padding(
           padding: const EdgeInsets.all(20),

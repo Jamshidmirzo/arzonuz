@@ -29,7 +29,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     // ignore: use_build_context_synchronously
     context.read<AuthBloc>().add(
-          AuthCheckStatusEvent(refreshToken: refreshToken, userId: userId),
+          AuthEvent.authCheck(refreshToken, userId),
         );
   }
 
@@ -39,21 +39,19 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.deepPurple,
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthAuthicated) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const BottomNavBarScreen(),
-              ),
-            );
-          } else if (state is AuthError || state is AuthUnuthicated) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(),
-              ),
-            );
-          }
+          state.status == Status.AUTHICATED
+              ? Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const BottomNavBarScreen(),
+                  ),
+                )
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginScreen(),
+                  ),
+                );
         },
         child: Center(
           child: Image.asset(

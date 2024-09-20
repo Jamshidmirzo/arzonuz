@@ -34,7 +34,7 @@ class FeedbackService {
       String refreshToken, String productId) async {
     try {
       final url = '$baseUrl/feedback/$productId';
-      final responce = await dio.post(
+       await dio.post(
         url,
         data: feedbackUserRequest.toMap(),
         options: Options(

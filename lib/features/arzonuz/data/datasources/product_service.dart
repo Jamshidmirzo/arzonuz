@@ -46,6 +46,7 @@ class ProductService {
     } catch (e) {
       rethrow;
     }
+    return null;
 
   }
 

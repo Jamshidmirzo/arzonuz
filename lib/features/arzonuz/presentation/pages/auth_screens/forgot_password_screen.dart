@@ -1,3 +1,4 @@
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_forgot_pass_usecases.dart';
 import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/new_pass_screen.dart';
 
@@ -38,7 +39,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     isSend = true;
     setState(() {});
     context.read<AuthBloc>().add(
-          AuthForgotEvent(email: emailController.text),
+          AuthEvent.authForgot(
+            AuthForgotParams(params: emailController.text),
+          ),
         );
     showDialog(
       context: context,

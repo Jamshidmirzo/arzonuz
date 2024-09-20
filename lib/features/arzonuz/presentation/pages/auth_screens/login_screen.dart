@@ -1,5 +1,6 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:arzonuz/features/arzonuz/data/models/auth_models/login_request.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_login_usecases.dart';
 import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/forgot_password_screen.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/register_screen.dart';
@@ -21,10 +22,12 @@ class LoginScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       context.read<AuthBloc>().add(
-            AuthLoginrEvent(
-              loginRequest: LoginRequest(
-                email: emailController.text,
-                password: passController.text,
+            AuthEvent.authLogin(
+              AuthLoginParams(
+                loginRequest: LoginRequest(
+                  email: emailController.text,
+                  password: passController.text,
+                ),
               ),
             ),
           );
@@ -37,43 +40,38 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(),
       body: BlocConsumer<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthError) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("OK"),
-                    )
-                  ],
-                  title: Text(state.message),
+          state.status == Status.ERROR
+              ? showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("OK"),
+                        )
+                      ],
+                      title: Text(state.message ?? ""),
+                    );
+                  },
+                )
+              : Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const BottomNavBarScreen();
+                    },
+                  ),
                 );
-              },
-            );
-          }
-
-          if (state is AuthAuthicated) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) {
-                  return const BottomNavBarScreen();
-                },
-              ),
-            );
-          }
         },
         builder: (context, state) {
-          if (state is AuthLoading) {
-            return const Center(
+         return state.status ==Status.LOADING ?
+             const Center(
               child: CircularProgressIndicator(),
-            );
-          }
-          return Padding(
+            ):
+           Padding(
             padding: const EdgeInsets.all(20),
             child: SingleChildScrollView(
               child: Form(

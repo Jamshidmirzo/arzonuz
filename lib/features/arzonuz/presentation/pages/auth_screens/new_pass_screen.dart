@@ -1,4 +1,5 @@
 import 'package:arzonuz/features/arzonuz/data/models/passwords/forgot_pass_reeuqest.dart';
+import 'package:arzonuz/features/arzonuz/domain/usecases/auth_reset_usecases.dart';
 import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
 import 'package:arzonuz/features/arzonuz/presentation/pages/auth_screens/succesufuly_forgot_password_screen.dart';
 import 'package:arzonuz/features/arzonuz/presentation/widgets/button_with_elevation.dart';
@@ -17,9 +18,11 @@ class NewPassScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       context.read<AuthBloc>().add(
-            AuthResetEvent(
-              forgotPassRequest: ForgotPassRequest(
-                  code: code, email: email, password: passController.text),
+            AuthEvent.authReset(
+              ResetPassRequestParams(
+                params: ForgotPassRequest(
+                    code: code, email: email, password: passController.text),
+              ),
             ),
           );
     }
@@ -31,31 +34,31 @@ class NewPassScreen extends StatelessWidget {
       appBar: AppBar(),
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
-          if (state is AuthError) {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  actions: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text("OK"),
-                    )
-                  ],
-                  title: Text(state.message),
+          state.status == Status.ERROR
+              ? showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      actions: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("OK"),
+                        )
+                      ],
+                      title: Text(state.message ?? ""),
+                    );
+                  },
+                )
+              : Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const SuccessfullyForgotPasswordScreen();
+                    },
+                  ),
                 );
-              },
-            );
-          }
-          if (state is AuthSuccesifullyReset) {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return const SuccessfullyForgotPasswordScreen();
-              },
-            ));
-          }
         },
         child: Padding(
           padding: const EdgeInsets.all(20),
