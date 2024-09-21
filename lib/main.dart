@@ -1,20 +1,14 @@
-import 'dart:io';
-
 import 'package:adaptive_theme/adaptive_theme.dart';
-import 'package:arzonuz/features/arzonuz/data/datasources/auth_datasources.dart';
-import 'package:arzonuz/features/arzonuz/data/repositories/auth_repositories.dart';
-import 'package:arzonuz/features/arzonuz/domain/usecases/auth_login_usecases.dart';
-import 'package:arzonuz/features/arzonuz/domain/usecases/auth_register_usecases.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/auth/auth_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/card/card_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/favourite/favourite_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/feedback/feedback_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/process/process_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/product/product_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/user/user_bloc.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/button_cubit.dart';
-import 'package:arzonuz/features/arzonuz/presentation/blocs/cubits/filter_cubit.dart';
-import 'package:arzonuz/features/arzonuz/presentation/pages/splash_screen/splash_screen.dart';
+import 'package:arzonuz/features/arzonuz/auth/presentation/bloc/auth_bloc.dart';
+import 'package:arzonuz/features/arzonuz/card/presentation/blocs/card/card_bloc.dart';
+import 'package:arzonuz/features/arzonuz/favourite/presentation/blocs/favourite/favourite_bloc.dart';
+import 'package:arzonuz/features/arzonuz/feedbacks/presentation/blocs/feedback/feedback_bloc.dart';
+import 'package:arzonuz/features/arzonuz/process/presentation/process/process_bloc.dart';
+import 'package:arzonuz/features/arzonuz/product/presentation/bloc/product_bloc.dart';
+import 'package:arzonuz/features/arzonuz/profile/presentation/blocs/user/user_bloc.dart';
+import 'package:arzonuz/features/arzonuz/fliter/presentation/cubits/button_cubit.dart';
+import 'package:arzonuz/features/arzonuz/fliter/presentation/cubits/filter_cubit.dart';
+import 'package:arzonuz/features/arzonuz/home/presentation/pages/splash_screen/splash_screen.dart';
 import 'package:arzonuz/sevice_locator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -59,13 +53,13 @@ class MyApp extends StatelessWidget {
           create: (context) => UserBloc(),
         ),
         BlocProvider(
-          create: (context) => CardBloc(),
+          create: (context) => sl<CardBloc>(),
         ),
         BlocProvider(
           create: (context) => ProductBloc(),
         ),
         BlocProvider(
-          create: (context) => FeedbackBloc(),
+          create: (context) => sl<FeedbackBloc>(),
         ),
         BlocProvider(
           create: (context) => FavoriteBloc(),

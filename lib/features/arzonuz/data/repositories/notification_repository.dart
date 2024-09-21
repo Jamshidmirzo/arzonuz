@@ -1,4 +1,4 @@
-import 'package:arzonuz/features/arzonuz/data/datasources/notification_service.dart';
+import 'package:arzonuz/features/arzonuz/notifications/data/datasources/notification_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationRepository {

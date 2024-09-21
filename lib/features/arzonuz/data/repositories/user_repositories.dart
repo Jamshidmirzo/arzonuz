@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:arzonuz/features/arzonuz/data/models/passwords/change_pass_request.dart';
-import 'package:arzonuz/features/arzonuz/data/models/auth_models/update_profile_request.dart';
-import 'package:arzonuz/features/arzonuz/data/datasources/user_service.dart';
+import 'package:arzonuz/features/arzonuz/auth/data/model/update_profile_request.dart';
+import 'package:arzonuz/features/arzonuz/auth/data/model/passwords/change_pass_request.dart';
+import 'package:arzonuz/features/arzonuz/profile/data/datasources/user_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepositories {
@@ -21,13 +21,10 @@ class UserRepositories {
   }
 
   getUser() async {
-    print('Repo kriididd');
     try {
       final shared = await SharedPreferences.getInstance();
       String? refreshToken =  shared.getString('refreshToken');
-      print(refreshToken);
       if (refreshToken != null) {
-        print('BLocda kriididd 2');
         return userService.getUser(refreshToken);
       }
     } catch (e) {

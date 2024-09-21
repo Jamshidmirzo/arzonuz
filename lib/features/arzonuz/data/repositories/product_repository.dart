@@ -1,10 +1,12 @@
-import 'package:arzonuz/features/arzonuz/data/models/product_model/product.dart';
-import 'package:arzonuz/features/arzonuz/data/models/product_model/product_responce.dart';
-import 'package:arzonuz/features/arzonuz/data/datasources/product_service.dart';
+import 'package:arzonuz/features/arzonuz/product/data/model/product_model/product.dart';
+import 'package:arzonuz/features/arzonuz/product/data/model/product_model/product_responce.dart';
+
+import 'package:arzonuz/features/arzonuz/product/data/datasources/product_datasource.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductRepository {
-  ProductService productService = ProductService();
+  ProductDatasource productService = ProductDatasource();
 
   createProduct(
     ProductResponce productResponce,
@@ -119,3 +121,5 @@ class ProductRepository {
     return null;
   }
 }
+
+
